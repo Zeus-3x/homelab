@@ -3,26 +3,4 @@ kind: Kustomization
 
 resources:
   - cluster-vars.yaml
-  - cilium.yaml
-
-replacements:
-  - source:
-      kind: ConfigMap
-      name: cluster-vars
-      fieldPath: data.k8s_api_host
-    targets:
-      - select:
-          kind: Application
-          name: cilium
-        fieldPaths:
-          - spec.source.helm.valuesObject.k8sServiceHost
-  - source:
-      kind: ConfigMap
-      name: cluster-vars
-      fieldPath: data.k8s_api_port
-    targets:
-      - select:
-          kind: Application
-          name: cilium
-        fieldPaths:
-          - spec.source.helm.valuesObject.k8sServicePort
+  - flannel.yaml
