@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: signoz-ingress
+  name: longhorn-ingress
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -10,10 +10,10 @@ spec:
   source:
     repoURL: https://github.com/Zeus-3x/homelab.git
     targetRevision: main
-    path: infrastructure/signoz-stack
+    path: infrastructure/storage/longhorn
   destination:
     server: https://kubernetes.default.svc
-    namespace: signoz
+    namespace: longhorn-system
   syncPolicy:
     automated:
       prune: true

@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/Zeus-3x/homelab.git
     targetRevision: main
-    path: infrastructure/argocd-server
+    path: infrastructure/argocd
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
