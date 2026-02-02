@@ -1,0 +1,59 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: lidarr
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://kubesail.github.io/charts
+    chart: lidarr
+    targetRevision: 1.0.0
+    helm:
+      valuesObject:
+        image:
+          repository: lscr.io/linuxserver/lidarr
+          tag: latest
+
+        env:
+          TZ: America/New_York
+          PUID: "1000"
+          PGID: "1000"
+
+        persistence:
+          config:
+            enabled: true
+            storageClass: longhorn
+            accessMode: ReadWriteOnce
+            size: 10Gi
+
+          media:
+            enabled: true
+            type: nfs
+            server: 192.168.1.6
+            path: /mnt/user/data
+            mountPath: /data
+
+        service:
+          main:
+            ports:
+              http:
+                port: 8686
+
+        tolerations:
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
+            effect: NoSchedule
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

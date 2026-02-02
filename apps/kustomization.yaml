@@ -8,3 +8,4 @@ resources:
   - core/traefik/
   - storage/longhorn/
   - observability/signoz/
+  - media/lidarr/
