@@ -1,30 +1,18 @@
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: signoz
   namespace: signoz
 spec:
-  entryPoints:
-    - web
-  routes:
-    - match: Host(`signoz.homelab.local`)
-      kind: Rule
-      services:
-        - name: signoz-frontend
-          port: 3301
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: signoz-https
-  namespace: signoz
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - match: Host(`signoz.homelab.local`)
-      kind: Rule
-      services:
-        - name: signoz-frontend
-          port: 3301
-  tls: {}
+  ingressClassName: traefik
+  rules:
+    - host: signoz.homelab.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: signoz
+                port:
+                  number: 8080
