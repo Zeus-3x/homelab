@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: signoz-ingress
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Zeus-3x/homelab.git
+    targetRevision: main
+    path: infrastructure/signoz
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: signoz
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
