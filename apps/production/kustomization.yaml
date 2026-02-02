@@ -4,7 +4,10 @@ kind: Kustomization
 resources:
   - cluster-vars.yaml
   - flannel.yaml
+  - metallb.yaml
+  - metallb-config.yaml
   - traefik.yaml
   - argocd-ingress.yaml
   - longhorn.yaml
+  - longhorn-ingress.yaml
   - signoz.yaml
