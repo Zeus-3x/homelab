@@ -8,9 +8,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/flannel-io/flannel.git
-    targetRevision: v0.25.1
-    path: Documentation/kube-flannel.yml
+    repoURL: https://github.com/Zeus-3x/homelab.git
+    targetRevision: main
+    path: infrastructure/flannel
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-flannel
