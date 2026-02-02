@@ -19,25 +19,24 @@ spec:
               operator: Exists
               effect: NoSchedule
 
+        hostNetwork: true
+
         ports:
           web:
-            port: 8000
+            port: 80
             expose:
               default: true
-            nodePort: 30080
           websecure:
-            port: 8443
+            port: 443
             expose:
               default: true
-            nodePort: 30443
           traefik:
             port: 9000
             expose:
               default: true
-            nodePort: 30900
 
         service:
-          type: NodePort
+          type: ClusterIP
 
         ingressRoute:
           dashboard:
