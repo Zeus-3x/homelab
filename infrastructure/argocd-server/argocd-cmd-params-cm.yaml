@@ -5,5 +5,3 @@ metadata:
   namespace: argocd
 data:
   server.insecure: "true"
-  server.basehref: "/"
-  server.rootpath: "/"
