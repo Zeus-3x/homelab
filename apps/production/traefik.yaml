@@ -1,0 +1,59 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://traefik.github.io/charts
+    chart: traefik
+    targetRevision: 32.1.0
+    helm:
+      valuesObject:
+        deployment:
+          tolerations:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
+              effect: NoSchedule
+
+        ports:
+          web:
+            port: 8000
+            expose:
+              default: true
+            nodePort: 30080
+          websecure:
+            port: 8443
+            expose:
+              default: true
+            nodePort: 30443
+          traefik:
+            port: 9000
+            expose:
+              default: true
+            nodePort: 30900
+
+        service:
+          type: NodePort
+
+        ingressRoute:
+          dashboard:
+            enabled: true
+
+        logs:
+          general:
+            level: INFO
+          access:
+            enabled: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: traefik
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
