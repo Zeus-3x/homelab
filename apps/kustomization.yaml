@@ -9,3 +9,4 @@ resources:
   - storage/longhorn/
   - observability/signoz/
   - media/lidarr/
+  - media/ombi/

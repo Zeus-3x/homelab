@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ombi
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Zeus-3x/ombi-helm.git
+    targetRevision: master
+    path: .
+    helm:
+      valuesObject:
+        env:
+          TZ: America/New_York
+          PUID: "1000"
+          PGID: "1000"
+
+        persistence:
+          enabled: true
+          storageClass: longhorn
+          size: 1Gi
+          accessMode: ReadWriteOnce
+
+        tolerations:
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
+            effect: NoSchedule
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
