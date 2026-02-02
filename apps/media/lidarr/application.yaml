@@ -8,9 +8,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://kubesail.github.io/charts
+    repoURL: https://k8s-home-lab.github.io/helm-charts/
     chart: lidarr
-    targetRevision: 1.0.0
+    targetRevision: 15.2.1
     helm:
       valuesObject:
         image:
