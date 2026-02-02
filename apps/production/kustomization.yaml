@@ -11,3 +11,4 @@ resources:
   - longhorn.yaml
   - longhorn-ingress.yaml
   - signoz.yaml
+  - signoz-ingress.yaml
