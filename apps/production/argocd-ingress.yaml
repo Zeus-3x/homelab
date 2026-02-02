@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-ingress
+  name: argocd-server
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/Zeus-3x/homelab.git
     targetRevision: main
-    path: infrastructure/argocd
+    path: infrastructure/argocd-server
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

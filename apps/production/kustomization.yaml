@@ -6,5 +6,5 @@ resources:
   - flannel.yaml
   - traefik.yaml
   - argocd-ingress.yaml
+  - longhorn.yaml
   - signoz.yaml
-  - signoz-ingress.yaml
