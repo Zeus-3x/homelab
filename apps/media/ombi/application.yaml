@@ -24,6 +24,15 @@ spec:
           size: 1Gi
           accessMode: ReadWriteOnce
 
+        ingress:
+          enabled: true
+          className: traefik
+          hosts:
+            - host: ombi.homelab.local
+              paths:
+                - path: /
+                  pathType: Prefix
+
         tolerations:
           - key: node-role.kubernetes.io/control-plane
             operator: Exists
