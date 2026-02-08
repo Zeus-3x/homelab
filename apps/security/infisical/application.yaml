@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://dl.cloudsmith.io/public/infisical/helm-charts/helm/charts/
     chart: infisical-standalone
-    targetRevision: 1.0.25
+    targetRevision: 0.4.2
     helm:
       valuesObject:
         infisical:
