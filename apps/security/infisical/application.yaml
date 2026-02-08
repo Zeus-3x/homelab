@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infisical
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://dl.cloudsmith.io/public/infisical/helm-charts/helm/charts/
+    chart: infisical-standalone
+    targetRevision: 1.0.25
+    helm:
+      valuesObject:
+        infisical:
+          replicaCount: 1
+          autoDatabaseSchemaMigration: true
+          tolerations:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
+              effect: NoSchedule
+
+        ingress:
+          enabled: true
+          hostName: infisical.homelab.local
+          ingressClassName: traefik
+          nginx:
+            enabled: false
+
+        postgresql:
+          enabled: true
+          tolerations:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
+              effect: NoSchedule
+
+        redis:
+          enabled: true
+          architecture: standalone
+          master:
+            tolerations:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+                effect: NoSchedule
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: infisical
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

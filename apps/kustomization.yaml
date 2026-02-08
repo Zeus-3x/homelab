@@ -10,3 +10,4 @@ resources:
   - observability/signoz/
   - media/lidarr/
   - media/ombi/
+  - security/infisical/
