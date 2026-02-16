@@ -8,9 +8,8 @@ metadata:
 spec:
   project: default
   source:
-    chart: seerr-chart
-    repoURL: oci://ghcr.io/seerr-team/seerr
-    targetRevision: 3.1.0 
+    repoURL: oci://ghcr.io/seerr-team/seerr/seerr-chart
+    targetRevision: 3.1.0
     helm:
       valuesObject:
         persistence:
