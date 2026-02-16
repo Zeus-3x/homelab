@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: seerr
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    chart: seerr-chart
+    repoURL: oci://ghcr.io/seerr-team/seerr
+    targetRevision: 3.1.0 
+    helm:
+      valuesObject:
+        persistence:
+          enabled: true
+          storageClass: longhorn
+          size: 5Gi
+          accessMode: ReadWriteOnce
+
+        ingress:
+          enabled: true
+          className: traefik
+          hosts:
+            - host: seerr.homelab.local
+              paths:
+                - path: /
+                  pathType: Prefix
+
+        tolerations:
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
+            effect: NoSchedule
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
