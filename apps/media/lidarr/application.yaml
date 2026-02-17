@@ -14,8 +14,8 @@ spec:
     helm:
       valuesObject:
         image:
-          repository: lscr.io/linuxserver/lidarr
-          tag: latest
+          repository: ghcr.io/hotio/lidarr
+          tag: nightly
 
         env:
           TZ: America/New_York
